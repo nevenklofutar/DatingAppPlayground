@@ -4,6 +4,6 @@
 
 2. start Angular DatingApp-SPA using "ng serve"
 
-register a user (password must be 4-8 chars)
+3. register a user (password must be 4-8 chars)
 
-login using registered user in the navigation on top
+4. login using registered user in the navigation on top
