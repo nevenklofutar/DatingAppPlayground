@@ -11,6 +11,7 @@
   <div *ngIf="registerMode" class="container">
     <div class="row justify-content-center">
       <div class="col-4">
+          <!-- valuesFromHome >> test for input from parent(home) component -->
         <app-register [valuesFromHome]="values" (cancelRegister)="cancelRegisterMode($event)"></app-register>
       </div>
     </div>
