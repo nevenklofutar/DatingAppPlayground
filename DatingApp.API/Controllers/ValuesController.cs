@@ -16,6 +16,7 @@ namespace DatingApp.API.Controllers
         [AllowAnonymous]
         public ActionResult<IEnumerable<string>> Get()
         {
+            throw new Exception("manualy exception");
             return new string[] { "value1", "value2" };
         }
 
