@@ -7,33 +7,26 @@ import { AlertifyService } from '../_services/alertify.service';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   model: any = {};
 
-  constructor(private authService: AuthService, private alertify: AlertifyService) { }
-
-  ngOnInit() {
-  }
+  constructor(public authService: AuthService, private alertify: AlertifyService) { }
 
   login() {
     this.authService.login(this.model).subscribe(next => {
       this.alertify.success('Login success');
-      console.log('Login success');
     }, error => {
       this.alertify.error(error);
-      console.log(error);
     });
     // console.log(this.model);
   }
 
   loggedIn() {
-    const token = localStorage.getItem('token');
-    return !!token;
+    return this.authService.loggedIn();
   }
 
   logout() {
     localStorage.removeItem('token');
     this.alertify.message('Logged out!');
-    console.log('Logged out!');
   }
 }
