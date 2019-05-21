@@ -37,6 +37,7 @@ namespace DatingApp.API
             services.AddCors();
             services.AddTransient<Seed>();
             services.AddScoped<IAuthorizationRepository, AuthorizationRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
