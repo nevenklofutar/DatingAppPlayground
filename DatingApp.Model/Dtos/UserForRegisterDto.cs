@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DatingApp.API.Models.Dtos
 {
+    // change to fluent api ??
+    // https://www.entityframeworktutorial.net/efcore/fluent-api-in-entity-framework-core.aspx
+
     public class UserForRegisterDto
     {
         [Required]
