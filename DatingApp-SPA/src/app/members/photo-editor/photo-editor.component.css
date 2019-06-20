@@ -4,6 +4,14 @@ img.thumbnail {
      margin-bottom: 2px;
 }
 
-/* file uploader css */
+/* file uploader css
 .my-drop-zone { border: dotted 3px lightgray; }
 .nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+
+.nv-file-over {
+     border: dotted 3px red;
+}
+
+input[type=file] {
+     color: transparent;
+}

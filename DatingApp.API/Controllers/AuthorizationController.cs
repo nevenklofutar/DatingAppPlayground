@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using AutoMapper;
 
 namespace DatingApp.API.Controllers
 {
@@ -19,11 +20,13 @@ namespace DatingApp.API.Controllers
     {
         private readonly IAuthorizationRepository _authorizationRepository;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
         public AuthorizationController(IAuthorizationRepository authorizationRepository,
-            IConfiguration configuration)
+            IConfiguration configuration, IMapper mapper)
         {
             _configuration = configuration;
+            _mapper = mapper;
             _authorizationRepository = authorizationRepository;
         }
 
@@ -48,16 +51,16 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _authorizationRepository.Login(userForLoginDto.Username.ToLower(),
+            var userFromRepo = await _authorizationRepository.Login(userForLoginDto.Username.ToLower(),
                 userForLoginDto.Password);
 
-            if (user == null)
+            if (userFromRepo == null)
                 return Unauthorized();
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -76,8 +79,11 @@ namespace DatingApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
             return Ok(new {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user
             });
         }
     }
