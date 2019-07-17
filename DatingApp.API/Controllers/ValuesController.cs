@@ -12,17 +12,18 @@ namespace DatingApp.API.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
+        [Authorize(Roles = "Admin, Moderator")]
         [HttpGet]
-        [AllowAnonymous]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<List<string>> GetValues()
         {
-            return new string[] { "value1", "value2" };
+            var values = new List<string> { "value1", "value2", "value3" };
+            return Ok(values);
         }
 
         // GET api/values/5
+        [Authorize(Roles = "Member")]
         [HttpGet("{id}")]
-        [AllowAnonymous]
-        public ActionResult<string> Get(int id)
+        public ActionResult<string> GetValue(int id)
         {
             return "value";
         }
